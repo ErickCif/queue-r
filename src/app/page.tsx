@@ -1,16 +1,24 @@
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from './page.module.css'
+import {SpotifyConnectComponent} from "../pages/components/SpotifyConnectComponent";
+import process from "process";
 
-const inter = Inter({ subsets: ['latin'] })
+//const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  /*return(
-      <div className="text-xl">
+
+    const test_client = process.env.SPOTIFY_CLIENT;
+    const test_secret = process.env.SPOTIFY_SECRET;
+
+
+  return(
+      <div className="text-xl text-center">
         test
+          <SpotifyConnectComponent client_id={test_client} secret_id={test_secret}/>
       </div>
-  )*/
-  return (
+  )
+  /*return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
@@ -92,5 +100,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  )*/
 }
