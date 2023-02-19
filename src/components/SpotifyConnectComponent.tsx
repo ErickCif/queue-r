@@ -6,7 +6,7 @@ type Props = {
     secret_id: string;
 }
 
-export async function SpotifyConnectComponent(props: Props) : Promise<JSX.Element> {
+export async function SpotifyConnectComponent(props: Props){
 
     const client = props.client_id;
     const secret = props.secret_id;
@@ -23,8 +23,6 @@ export async function SpotifyConnectComponent(props: Props) : Promise<JSX.Elemen
     const result = await api.searchTracks(query);
     const track = result.body.tracks.items[0];
 
-
-    //<button className="btn rounded-full">Test Button</button>
 
     return(
         <div className="flex-col items-center">
