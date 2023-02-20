@@ -1,6 +1,7 @@
 import React from 'react';
 import SpotifyWebApi from "spotify-web-api-node";
 import {useState, useEffect} from "react";
+import TrackObjectFull = SpotifyApi.TrackObjectFull;
 
 type Props = {
     client_id: string;
@@ -17,16 +18,38 @@ export async function SpotifyConnectComponent(props: Props){
        // redirectUri: 'http://localhost:3000/api/auth/callback/spotify'
     });
 
-    const[ test, setTest ] = useState(null);
-    useEffect(() = > {})
+    const query = "Wesley's Theory";
+    const[ song, setSong ] = useState<TrackObjectFull>();
+    /*useEffect(() => {
+        async function getSong() {
+            const token = await api.clientCredentialsGrant();
+            api.setAccessToken(token.body.access_token);
+
+            const result = await api.searchTracks(query);
+            setSong(result.body.tracks?.items[0]);
+        }
+        getSong();
+    })
 
 
-    const data = await api.clientCredentialsGrant();
+    /*const data = await api.clientCredentialsGrant();
     api.setAccessToken(data.body.access_token);
 
-    const query = "Wesley's Theory";
+
     const result = await api.searchTracks(query);
-    const track = result.body.tracks?.items[0];
+    const track = result.body.tracks?.items[0];*/
+    useEffect(() => {
+        async function fetchData() {
+            const token = await api.clientCredentialsGrant();
+            api.setAccessToken(token.body.access_token);
+
+            const result = await api.searchTracks(query);
+            setSong(result.body.tracks?.items[0]);
+        }
+
+        fetchData();
+    }, []);
+    const track = song;
 
     return(
         <div className="flex-col items-center">
