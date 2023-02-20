@@ -23,7 +23,6 @@ export default function HomePageComponent() : JSX.Element{
                         className="btn rounded-full"
                     >Supabase Testing</button>
                 </form>
-
             </div>
 
         </div>

@@ -22,7 +22,7 @@ export default function SpotifySearchSongComponent(): JSX.Element {
                 <div className="mt-10 mb-12">
                     <input
                         type="text"
-                        placeholder="Search Song Here!"
+                        placeholder="Search Spotify"
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
                         onKeyPress={handleKeyPress}

@@ -19,7 +19,7 @@ export default function AppleMusicSearchComponent() {
     return (
         <div className="bg-black text-white">
             <div className="max-w-xl mx-auto p-4">
-                <h1 className="font-serif text-4xl font-bold mb-6">Apple Music</h1>
+                <h1 className="font-serif text-4xl font-bold mb-6">Queue-R x Apple Music</h1>
                 <div className="flex items-center">
                     <input
                         type="text"
