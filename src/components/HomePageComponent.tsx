@@ -6,17 +6,12 @@ export default function HomePageComponent() : JSX.Element{
 
 
     return(
-        <div className="place-content-center mt-12">
+        <div className="place-content-center mt-12 text-white">
             <div>
                 <form action='/spotify/spotify-testing/' className="inline-flex">
                     <button
                         className="btn rounded-full"
                     >Spotify Testing</button>
-                </form>
-                <form action='/apple-music/apple-music-testing/' className="inline-flex">
-                    <button
-                        className="btn rounded-full"
-                    >Apple Music Testing</button>
                 </form>
                 <form action='/supabase/sb-testing/' className="inline-flex">
                     <button
