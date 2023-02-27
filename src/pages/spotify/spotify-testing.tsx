@@ -2,8 +2,8 @@ import React from 'react';
 import { useState, useEffect} from "react";
 import SpotifySearchSongComponent from "components/components/SpotifySearchSongComponent";
 import LoginPage from "components/pages/spotify/login";
-import {getSpotifyAccessToken} from "components/app/lib/getSpotifyAccessToken";
-import {spotifyWebApi} from "components/app/lib/spotifyClient";
+import {getSpotifyAccessToken} from "components/lib/getSpotifyAccessToken";
+import {spotifyWebApi} from "components/lib/spotifyClient";
 
 export default function spotifyTesting(){
 
