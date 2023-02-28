@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import '../../app/globals.css';
-import {supabase} from "components/lib/supabaseClient";
+import {supabase} from "../../lib/supabaseClient";
 
 const LoginPage = () => {
     const [accessToken, setAccessToken] = useState("");
