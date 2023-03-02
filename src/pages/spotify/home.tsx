@@ -3,15 +3,13 @@ import { useState, useEffect} from "react";
 import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import { Login } from "../../components/SpotifyLoginComponent";
-import axios from "axios";
-import {getSpotifyAccessToken} from "components/util/getSpotifyAccessToken";
 import {WebPlayback} from "components/components/WebPlaybackComponent";
 
 type Props = {
     token: string;
 };
 
-export default function spotifyTesting({ token }){
+export default function home(props: Props){
 
     const [query, setQuery] = useState("");
     const [ searchResults, setSearchResults ] = useState<string[]>([]);
@@ -29,7 +27,6 @@ export default function spotifyTesting({ token }){
     // Test Credentials only, component currently not working
     const client = "2bf2dbe207264086aa7a81be7f9be525";
     const secret = "1832b279215f41d9b4a5520b6facf35c";
-
 
     return (
         <div className="items-center h-screen">
@@ -65,12 +62,14 @@ export default function spotifyTesting({ token }){
                             <p className="text-green-500 font-bold text-md mb-4">Awaiting Search...</p>
                         </div>
                     )}
+
+                    {props.token === "" ? <Login /> : <WebPlayback token={props.token} />}
+
                     <form action='/' className="w-max inline-flex place-self-center">
                         <button
-                            className="btn rounded-full"
+                            className="btn rounded-full my-8"
                         >Back Home!</button>
                     </form>
-                    {token === "" ? <Login /> : <WebPlayback token={token} />}
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { serialize, CookieSerializeOptions } from "cookie";
 import axios from "axios";
+import {spotifyWebApi} from "components/lib/spotifyClient";
 
 type SpotifyAuthApiResponse = {
     access_token: string;
@@ -27,7 +28,7 @@ export const setCookie = (
     res.setHeader("Set-Cookie", serialize(name, stringValue, options));
 };
 
-const callback = async (req: NextApiRequest) => {
+const callback = async (req: NextApiRequest, res: NextApiResponse) => {
     const code = req.query.code;
     const spotify_redirect_uri = "http://localhost:3000/api/callback";
 
@@ -73,7 +74,8 @@ const callback = async (req: NextApiRequest) => {
         .then((response) => {
             if (response.data.access_token) {
                 setCookie(res, "spotify-token", response.data.access_token);
-                res.status(200).redirect("/");
+                res.status(200).redirect("/spotify/spotify-testing");
+                spotifyWebApi.setAccessToken(response.data.access_token);
             }
         })
         .catch((error) => {
