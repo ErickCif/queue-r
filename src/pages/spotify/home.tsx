@@ -18,8 +18,12 @@ interface Track {
 export default function home(props: Props){
 
     const [tracks, setTracks] = useState<Track[]>([]);
+    const [query, setQuery] = useState("");
+    const [ searchResults, setSearchResults ] = useState<string[]>([]);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const fetchTracks = async () => {
+        setIsLoading(true);
         const response = await fetch(`/api/search?search=${encodeURIComponent(query)}`);
         const data = await response.json();
         const trackData = data.tracks.items.map((track: any) => ({
@@ -28,20 +32,12 @@ export default function home(props: Props){
             albumCover: track.album.images[0].url,
         }));
         setTracks(trackData);
+        setIsLoading(false);
     };
 
 
-    const [query, setQuery] = useState("");
-    const [ searchResults, setSearchResults ] = useState<string[]>([]);
-
-    const handleSearch = () => {
-        setSearchResults([query]);
-    };
-
-    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            handleSearch();
-        }
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
     };
 
     // Test Credentials only, component currently not working
@@ -65,25 +61,30 @@ export default function home(props: Props){
                 <div className="rounded-b-box rounded-tr-box flex min-w-[18rem] flex-col items-center justify-center ">
                     <h1 className="text-green-500 font-bold text-3xl mb-4">Queue-R x Spotify</h1>
                     <div className="mt-10 mb-12">
-                        <input
-                            type="text"
-                            placeholder="Search Spotify"
-                            value={query}
-                            onChange={(event) => setQuery(event.target.value)}
-                            onKeyPress={handleKeyPress}
-                            className="w-64 h-10 px-3 rounded-lg bg-white border-2 border-green-400 text-green-500 outline-none focus:border-green-500 text-center"
-                        />
-
-                        <button onClick={fetchTracks}
-                                className="mt-2 px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        >Search for Tracks</button>
-                        {tracks.map((track, index) => (
-                            <div key={index}>
-                                <h3>{track.name}</h3>
-                                <p>{track.artist}</p>
-                                <img src={track.albumCover} alt={track.name} />
-                            </div>
-                        ))}
+                        <form onSubmit={(event) => {event.preventDefault(); fetchTracks();}}>
+                            <input
+                                type="text"
+                                placeholder="Search Spotify"
+                                value={query}
+                                onChange={handleSearchChange}
+                                className="w-64 h-10 px-3 rounded-lg bg-white border-2 border-green-400 text-green-500 outline-none focus:border-green-500 text-center"
+                            />
+                            <button onClick={fetchTracks}
+                                    className="mt-2 px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                    type="submit"
+                            >Search for Tracks</button>
+                        </form>
+                        {isLoading ? (
+                            <p>Loading...</p>
+                        ) : (
+                            tracks.map((track, index) => (
+                                <div key={index}>
+                                    <h3>{track.name}</h3>
+                                    <p>{track.artist}</p>
+                                    <img src={track.albumCover} alt={track.name} />
+                                </div>
+                            ))
+                        )}
                     </div>
                     {searchResults && searchResults.length >> 0? (
                         <div>

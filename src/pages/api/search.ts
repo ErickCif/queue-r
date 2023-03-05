@@ -11,7 +11,7 @@ export default async function handler(
             'https://v1.nocodeapi.com/sazu/spotify/uoNQwYomUOiEvYxz/search',
             {
                 params: {
-                    q: search,
+                    q:  search,
                     type: 'track',
                     perPage: 5,
                 },
