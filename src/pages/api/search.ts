@@ -8,7 +8,7 @@ export default async function handler(
     const {search} = req.query;
     try {
         const response = await axios.get(
-            'https://v1.nocodeapi.com/sazu/spotify/uoNQwYomUOiEvYxz/search',
+            'https://v1.nocodeapi.com/sazu/spotify/uFrORvYTgncfJPit/search\n',
             {
                 params: {
                     q:  search,
