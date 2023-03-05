@@ -9,7 +9,27 @@ type Props = {
     token: string;
 };
 
+interface Track {
+    name: string;
+    artist: string;
+    albumCover: string;
+}
+
 export default function home(props: Props){
+
+    const [tracks, setTracks] = useState<Track[]>([]);
+
+    const fetchTracks = async () => {
+        const response = await fetch(`/api/search?search=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        const trackData = data.tracks.items.map((track: any) => ({
+            name: track.name,
+            artist: track.artists[0].name,
+            albumCover: track.album.images[0].url,
+        }));
+        setTracks(trackData);
+    };
+
 
     const [query, setQuery] = useState("");
     const [ searchResults, setSearchResults ] = useState<string[]>([]);
@@ -28,6 +48,17 @@ export default function home(props: Props){
     const client = "2bf2dbe207264086aa7a81be7f9be525";
     const secret = "1832b279215f41d9b4a5520b6facf35c";
 
+    /*
+    <button onClick={fetchTracks}>Search for Tracks</button>
+                    {tracks.map((track, index) => (
+                        <div key={index}>
+                            <h3>{track.name}</h3>
+                            <p>{track.artist}</p>
+                            <img src={track.albumCover} alt={track.name} />
+                        </div>
+                    ))}
+     */
+
     return (
         <div className="items-center h-screen">
             <div className=" rounded-b-box rounded-tr-box relative overflow-x-auto">
@@ -42,12 +73,17 @@ export default function home(props: Props){
                             onKeyPress={handleKeyPress}
                             className="w-64 h-10 px-3 rounded-lg bg-white border-2 border-green-400 text-green-500 outline-none focus:border-green-500 text-center"
                         />
-                        <button
-                            onClick={handleSearch}
-                            className="mt-2 px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        >
-                            Search
-                        </button>
+
+                        <button onClick={fetchTracks}
+                                className="mt-2 px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                        >Search for Tracks</button>
+                        {tracks.map((track, index) => (
+                            <div key={index}>
+                                <h3>{track.name}</h3>
+                                <p>{track.artist}</p>
+                                <img src={track.albumCover} alt={track.name} />
+                            </div>
+                        ))}
                     </div>
                     {searchResults && searchResults.length >> 0? (
                         <div>
@@ -63,7 +99,11 @@ export default function home(props: Props){
                         </div>
                     )}
 
-                    {props.token === "" ? <Login /> : <WebPlayback token={props.token} />}
+                    {props.token === "" ? <Login /> :
+                        <div>
+                            <WebPlayback token={props.token} />
+                        </div>
+                    }
 
                     <form action='/' className="w-max inline-flex place-self-center">
                         <button

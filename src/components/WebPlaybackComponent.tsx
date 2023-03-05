@@ -4,7 +4,8 @@ type Props = {
     token: string;
 };
 
-export const WebPlayback: VFC<Props> = ({ token }) => {
+export const WebPlayback: VFC<Props> = (props: Props) => {
+    const token = props.token
     const [is_paused, setPaused] = useState<boolean>(false);
     const [is_active, setActive] = useState<boolean>(false);
     const [player, setPlayer] = useState<Spotify.Player | null>(null);

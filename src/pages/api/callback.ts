@@ -74,8 +74,7 @@ const callback = async (req: NextApiRequest, res: NextApiResponse) => {
         .then((response) => {
             if (response.data.access_token) {
                 setCookie(res, "spotify-token", response.data.access_token);
-                res.status(200).redirect("/spotify/spotify-testing");
-                spotifyWebApi.setAccessToken(response.data.access_token);
+                res.status(200).redirect("/spotify/home");
             }
         })
         .catch((error) => {

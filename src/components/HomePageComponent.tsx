@@ -8,7 +8,7 @@ export default function HomePageComponent() : JSX.Element{
     return(
         <div className="place-content-center mt-12 text-white">
             <div>
-                <form action='/spotify/spotify-testing/' className="inline-flex">
+                <form action='/spotify/home/' className="inline-flex">
                     <button
                         className="btn rounded-full"
                     >Spotify Testing</button>
