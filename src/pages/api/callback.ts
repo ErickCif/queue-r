@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { serialize, CookieSerializeOptions } from "cookie";
 import axios from "axios";
-import {spotifyWebApi} from "components/lib/spotifyClient";
 
 type SpotifyAuthApiResponse = {
     access_token: string;
