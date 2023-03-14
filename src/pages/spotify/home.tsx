@@ -44,20 +44,6 @@ export default function home(props: Props){
         setQuery(event.target.value);
     };
 
-    // Test Credentials only, component currently not working
-    const client = "2bf2dbe207264086aa7a81be7f9be525";
-    const secret = "1832b279215f41d9b4a5520b6facf35c";
-
-    /*
-    <button onClick={fetchTracks}>Search for Tracks</button>
-                    {tracks.map((track, index) => (
-                        <div key={index}>
-                            <h3>{track.name}</h3>
-                            <p>{track.artist}</p>
-                            <img src={track.albumCover} alt={track.name} />
-                        </div>
-                    ))}
-     */
 
     return (
         <div className="items-center h-screen">

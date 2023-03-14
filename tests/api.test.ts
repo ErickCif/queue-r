@@ -2,17 +2,10 @@ import { jest, describe, test, it, expect} from "@jest/globals";
 import axios, {AxiosInstance} from 'axios';
 import {getTracks} from "../src/pages/spotify/home";
 
-type track = {
-    name: string,
-    artist: string,
-    albumCover: string,
-};
 
-jest.mock('axios');
 
-it('return track information (title, artist, album', async() => {
-    (axios.get as jest.MockedFunction<AxiosInstance>).mockResolvedValue({
-        data : [
+export const mockedTrackData: Array<any> = [
+    {data : [
             {tracks:
                     {
                         items: [
@@ -30,9 +23,19 @@ it('return track information (title, artist, album', async() => {
                         ]
                     }
             }
-        ]
-    });
+        ]}
+]
 
+const mockGetTracks = jest.fn();
+jest.mock('getTracks', () => ({
+    get mockedTrackData() {
+        return mockGetTracks()
+    }
+}))
+
+
+
+test('return track information (title, artist, album', async() => {
     const tracks = await getTracks("Wesley's Theory");
     expect(tracks.name).toEqual("Wesley's Theory");
     expect(tracks.artist).toEqual('Kendrick Lamar');
