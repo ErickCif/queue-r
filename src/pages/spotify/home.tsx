@@ -1,8 +1,6 @@
 import React from 'react';
 import { useState, useEffect} from "react";
-import type { NextPage, GetServerSideProps } from "next";
-import Head from "next/head";
-import { Login } from "../../components/SpotifyLoginComponent";
+import {getTracks} from "../../util/getTracks";
 
 type Props = {
     token: string;
@@ -14,16 +12,6 @@ interface Track {
     albumCover: string;
 }
 
-export const getTracks = async(query: string) => {
-    const response = await fetch(`/api/search?search=${encodeURIComponent(query)}`);
-    const data = await response.json();
-    const trackData = data.tracks.items.map((track: any) => ({
-        name: track.name,
-        artist: track.artists[0].name,
-        albumCover: track.album.images[0].url,
-    }));
-    return trackData;
-}
 
 export default function home(props: Props){
 
@@ -101,16 +89,3 @@ export default function home(props: Props){
         </div>
     )
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    if (context.req.cookies["spotify-token"]) {
-        const token: string = context.req.cookies["spotify-token"];
-        return {
-            props: { token: token },
-        };
-    } else {
-        return {
-            props: { token: "" },
-        };
-    }
-};
