@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@babel/core": "^7.21.0",
@@ -50,6 +50,8 @@
     "@types/spotify-web-api-node": "^5.0.7",
     "autoprefixer": "^10.4.13",
     "babel-jest": "^29.5.0",
+    "form-request-submit-polyfill": "^2.0.0",
+    "jest-fetch-mock": "^3.0.3",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "react-test-renderer": "^18.2.0",

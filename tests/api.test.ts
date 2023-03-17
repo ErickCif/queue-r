@@ -1,17 +1,50 @@
-import {expect, test} from "@jest/globals";
-import {getTracks} from "../src/util/getTracks";
-import 'whatwg-fetch';
+import { getTracks } from '../src/util/getTracks';
+import fetchMock from 'jest-fetch-mock';
 
-interface Track {
-    name: string;
-    artist: string;
-    albumCover: string;
-}
+beforeEach(() => {
+    fetchMock.resetMocks();
+});
 
+global.fetch = fetchMock;
 
-test('Testing search API using NoCode and Spotify', async () => {
-    const tracks = await getTracks("Wesley's Theory");
-    expect(tracks.name).toEqual("Wesley's Theory");
-    expect(tracks.artist).toEqual("Kendrick Lamar");
-    expect(tracks.albumCover).toBeDefined();
-})
+describe('getTracks', () => {
+    it('returns an empty array when no tracks are found', async () => {
+        fetchMock.mockResponseOnce(JSON.stringify({ tracks: { items: [] } }));
+        const tracks = await getTracks('query');
+        expect(tracks).toEqual([]);
+    });
+
+    it('returns the expected data when tracks are found', async () => {
+        fetchMock.mockResponseOnce(
+            JSON.stringify({
+                tracks: {
+                    items: [
+                        {
+                            name: 'Track 1',
+                            artists: [{ name: 'Artist 1' }],
+                            album: { images: [{ url: 'https://album-cover-1.jpg' }] },
+                        },
+                        {
+                            name: 'Track 2',
+                            artists: [{ name: 'Artist 2' }],
+                            album: { images: [{ url: 'https://album-cover-2.jpg' }] },
+                        },
+                    ],
+                },
+            })
+        );
+        const tracks = await getTracks('query');
+        expect(tracks).toEqual([
+            {
+                name: 'Track 1',
+                artist: 'Artist 1',
+                albumCover: 'https://album-cover-1.jpg',
+            },
+            {
+                name: 'Track 2',
+                artist: 'Artist 2',
+                albumCover: 'https://album-cover-2.jpg',
+            },
+        ]);
+    });
+});

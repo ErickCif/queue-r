@@ -1,21 +1,29 @@
-import React, {useState} from 'react';
-import {Routes, useNavigate} from "react-router";
-import { BrowserRouter, Route } from "react-router-dom";
+import React from 'react';
 
 export default function HomePageComponent() : JSX.Element{
+
+    const handleSubmitSpotify = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        window.location.href = '/spotify/home/';
+    };
+
+    const handleSubmitSupabase = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        window.location.href = '/supabase/sb-testing/';
+    };
 
 
     return(
         <div className="place-content-center mt-12 text-white">
             <div>
-                <form action='/spotify/home/' className="inline-flex">
+                <form onSubmit={handleSubmitSpotify} className="inline-flex">
                     <button
-                        className="btn rounded-full"
+                        className="btn rounded-full" name='Spotify Testing'
                     >Spotify Testing</button>
                 </form>
-                <form action='/supabase/sb-testing/' className="inline-flex">
+                <form onSubmit={handleSubmitSupabase} className="inline-flex">
                     <button
-                        className="btn rounded-full"
+                        className="btn rounded-full" name='Supabase Testing'
                     >Supabase Testing</button>
                 </form>
             </div>
