@@ -1,10 +1,6 @@
 import React from 'react';
-import { useState, useEffect} from "react";
+import { useState} from "react";
 import {getTracks} from "../../util/getTracks";
-
-type Props = {
-    token: string;
-};
 
 interface Track {
     name: string;
@@ -13,11 +9,10 @@ interface Track {
 }
 
 
-export default function home(props: Props){
+export default function home(){
 
     const [tracks, setTracks] = useState<Track[]>([]);
     const [query, setQuery] = useState("");
-    const [ searchResults, setSearchResults ] = useState<string[]>([]);
     const [ isLoading, setIsLoading ] = useState(false);
 
     const fetchTracks = async () => {
@@ -64,20 +59,6 @@ export default function home(props: Props){
                             ))
                         )}
                     </div>
-                    {searchResults && searchResults.length >> 0? (
-                        <div>
-                            {searchResults.map((term, index) => (
-                                <li key={index}
-                                    className="text-green-500 font-bold text-md mb-4"
-                                >{term}</li>
-                            ))}
-                        </div>
-                    ): (
-                        <div>
-                            <p className="text-green-500 font-bold text-md mb-4">Awaiting Search...</p>
-                        </div>
-                    )}
-
 
                     <form action='/' className="w-max inline-flex place-self-center">
                         <button
