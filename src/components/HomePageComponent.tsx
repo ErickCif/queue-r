@@ -9,7 +9,7 @@ export default function HomePageComponent() : JSX.Element{
 
     const handleSubmitSupabase = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        window.location.href = '/supabase/sb-testing/';
+        window.location.href = '/supabase/get-link/';
     };
 
 
