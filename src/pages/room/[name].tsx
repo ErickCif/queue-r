@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {Message} from "../../util/Message";
 import {getTracks} from "../../util/getTracks";
 
@@ -10,7 +10,7 @@ interface Track {
     albumCover: string;
 }
 
-const ChatRoom: React.FC = () => {
+const MusicRoom: React.FC = () => {
     const router = useRouter();
     let messageCounter = 1;
     const {username} = router.query;
@@ -28,6 +28,14 @@ const ChatRoom: React.FC = () => {
         event.preventDefault();
         setSubmitted(true);
     };
+
+    const handleUsername = async(event: string) => {
+        if(!event){
+            setUsername('Anonymous');
+        }else{
+            setUsername(event);
+        }
+    }
 
     const updateCurrentTime = () => {
         setCurrentTime(new Date());
@@ -54,7 +62,12 @@ const ChatRoom: React.FC = () => {
         await fetchTracks(messageContent);
     }
 
-    const [chatLink, setChatLink] = useState(`${window.location.origin}${asPath}}`);
+    const [chatLink, setChatLink] = useState('');
+
+    useEffect(() => {
+        const link = `${window.location.origin}${asPath}`;
+        setChatLink(link);
+    }, [asPath]);
 
     const handleCopyLink = () => {
         navigator.clipboard.writeText(chatLink);
@@ -90,14 +103,14 @@ const ChatRoom: React.FC = () => {
                         <div className="text-center mt-4">
                             <form onSubmit={handleSubmit}>
                                 <label htmlFor="username-input" className="sr-only">
-                                    Choose a username or stay anonymous
+                                    Choose a username
                                 </label>
                                 <input
                                     type="text"
                                     id="username-input"
                                     placeholder="Choose a username or stay anonymous"
                                     value={msgUsername}
-                                    onChange={(e) => setUsername(e.target.value)}
+                                    onChange={(e) => handleUsername(e.target.value)}
                                     className="w-64 h-10 px-3 rounded-lg bg-white border-2 border-green-400 text-green-500 outline-none focus:border-green-500 text-center"
                                     disabled={submitted}
                                 />
@@ -151,13 +164,18 @@ const ChatRoom: React.FC = () => {
             </div>
             <div className="absolute bottom-0 text-green-500 text-center">
                 <p className="font-semibold">Share this link with your friends!</p>
-                <button onClick={handleCopyLink}>{chatLink}</button>
+                <button onClick={handleCopyLink} className="btn rounded-full">
+                    Copy Link
+                </button>
+                <button onClick={() => window.location.href = '/'} className="btn rounded-full">
+                    Back Home
+                </button>
             </div>
-</div>
+        </div>
 
     );
 };
 
 
 
-    export default ChatRoom;
+export default MusicRoom;

@@ -7,7 +7,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     try{
         let token;
         const {userID} = req.query
-        const apiKey = process.env.STREAM_CHAT_API_KEY;
+        const apiKey = process.env.STREAM_CHAT_API_KEY as string;
         const apiSecret = process.env.STREAM_CHAT_API_SECRET;
         const chatClient = new StreamChat(apiKey, apiSecret);
         if (typeof userID === "string") {
