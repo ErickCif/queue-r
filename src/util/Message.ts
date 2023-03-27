@@ -1,5 +1,5 @@
 export interface Message {
-    id: string;
+    id: number;
     content: string;
     username: string;
     timestamp: string;

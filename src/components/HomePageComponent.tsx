@@ -7,9 +7,9 @@ export default function HomePageComponent() : JSX.Element{
         window.location.href = '/spotify/home/';
     };
 
-    const handleSubmitSupabase = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitRooms = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        window.location.href = '/supabase/get-link/';
+        window.location.href = '/rooms/get-link/';
     };
 
 
@@ -21,10 +21,10 @@ export default function HomePageComponent() : JSX.Element{
                         className="btn rounded-full" name='Spotify Testing'
                     >Spotify Testing</button>
                 </form>
-                <form onSubmit={handleSubmitSupabase} className="inline-flex">
+                <form onSubmit={handleSubmitRooms} className="inline-flex">
                     <button
-                        className="btn rounded-full" name='Supabase Testing'
-                    >Supabase Testing</button>
+                        className="btn rounded-full" name='Room Testing'
+                    >Room Testing</button>
                 </form>
             </div>
 

@@ -3,32 +3,14 @@ import { useRouter } from 'next/router';
 
 export default function getLink(){
     const router = useRouter();
-    const [username, setUsername] = useState('');
-    const [room, setRoom] = useState();
+    const [username, setUsername] = useState<string>('');
 
     const handleGetLink = async() => {
-        const response = await fetch('/api/create-room');
+        const response = await fetch(`/api/create-room?userID=${encodeURIComponent(username)}`);
         const data = await response.json();
-        const roomId = data.roomId;
-        setRoom(roomId);
-        router.push(`/room/${room}?username=${username}`);
+        const token = data.token;
+        router.push(`/room/token=${token}?username=${username}`);
     }
-
-    /*
-    * <div>
-                <input
-                    type="text"
-                    placeholder="Enter your username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-64 h-10 px-3 rounded-lg bg-white border-2 border-green-400 text-green-500 outline-none focus:border-green-500 text-center"
-                />
-                    <button
-                        className="btn rounded-full" name='Get Link' disabled={!username} onSubmit={handleGetLink}
-                    >Get Room Link</button>
-
-            </div>
-    * */
 
 
     return(
