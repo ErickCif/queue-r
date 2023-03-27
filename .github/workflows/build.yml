@@ -34,19 +34,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install
+          yarn install
 
       - name: Build
         run: |
-          npm run build
+          yarn run build
 
       - name: Lint
         run: |
-          npm run lint
+          yarn run lint
 
       - name: Test
         run: |
-          npm run test
+          yarn run test
 
       - name: Upload coverage
         uses: codecov/codecov-action@v3
