@@ -1,10 +1,8 @@
 # QueueR
 QueueR (Coming Soon).
 
-#Phase 1:
-The initial groundwork for this project will include a website where the user logs on to open up a queue for their preferred music application.
-They will then be given a link to share to friends and other users who will use a search bar and a "current" queue view to
-suggest songs to the host to add into their music application.
+##RELEASE 0.0.1:
+The barebones for Queue-R has been released! The goal of this release is to have a roadmap for the application. As of now, the user gets their "own" room where "other users" can submit song requests, but the rooms themselves are not dynamic and "live," so to speak. The host cannot send out that link to anyone and have them join to start requesting songs. This is the next step!
 
 [![Deployment Status](https://img.shields.io/github/deployments/ErickCif/queue-r/production?label=deployment&logo=vercel)](https://queue-r.vercel.app)
 
