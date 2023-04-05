@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+/**
+ *
+ * @param req - Contains {search: string}, the term that is used to query the Spotify API
+ * @param res - Returns the search results from Spotify in pages containing five results each
+ */
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse

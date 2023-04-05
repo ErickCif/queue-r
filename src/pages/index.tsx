@@ -7,6 +7,10 @@ export default function Home() {
     const router = useRouter();
     const [username, setUsername] = useState<string>('');
 
+    /**
+     * @description - calls the create-room API call using the provided username to generate a room and redirects
+     * the user there
+     */
     const handleGetLink = async() => {
         const response = await fetch(`/api/create-room?userID=${encodeURIComponent(username)}`);
         const data = await response.json();
@@ -17,7 +21,7 @@ export default function Home() {
     return (
         <div className="text-xl text-center h-screen">
             <div className="flex flex-col items-center justify-center h-screen">
-                <h1 className="text-green-500 text-3xl font-bold mb-12 ">Queue-R</h1>
+                <h1 className="text-green-500 text-3xl font-bold mb-12 ">QueueR</h1>
                 <div className="text-center">
                     <input
                         type="text"
