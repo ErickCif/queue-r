@@ -1,9 +1,12 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {StreamChat} from "stream-chat";
 
+/**
+ *
+ * @param req - Contains the provided username to use in token creation as the "userID"
+ * @param res - Returns the created StreamChat token to use and share with users
+ */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    /*const roomId = uuidv4();
-    res.status(200).json({ roomId });*/
     try{
         let token;
         const {userID} = req.query
