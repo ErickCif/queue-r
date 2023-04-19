@@ -1,16 +1,15 @@
 # Welcome QueueR's documentation!
 
-## TypeScript Documentation
-
-- here
-- are
-- some
-- bullets
-
 
 ```eval_rst
+.. toctree::
+   :maxdepth: 2
+   :caption: :
+   
+   welcome
+
 .. note::
-    We can still mix rst, which we'll use for autodocumentation
+    Autodocumentation using sphinx-js in the works!
     
 .. autofunction:: getTracks
 ```
