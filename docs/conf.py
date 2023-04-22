@@ -18,9 +18,9 @@ from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
-project = '4995-demo'
-copyright = '2020, Tim Paine'
-author = 'Tim Paine'
+project = 'QueueR'
+copyright = '2023, Erick Cifuentes'
+author = 'Erick Cifuentes'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
