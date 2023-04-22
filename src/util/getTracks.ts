@@ -14,3 +14,4 @@ export const getTracks = async(query: string) => {
     }));
     return trackData;
 }
+
