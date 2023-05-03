@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import {Message} from "../../util/Message";
 import {getTracks} from "../../util/getTracks";
+import {supabase} from "../../util/supabase";
 
 interface Track {
     name: string;
@@ -49,14 +50,42 @@ const MusicRoom: React.FC = () => {
     };
 
 
-    const sendSongRequest = async(messageContent: string) => {
+    const sendSongRequest = async (messageContent: string) => {
         updateCurrentTime();
-        const message: Message = {id: messageCounter++, content: messageContent, timestamp: currentTime.toLocaleTimeString(), username: msgUsername}
+
+        const message: Message = {
+            id: messageCounter++,
+            content: messageContent,
+            timestamp: currentTime.toLocaleTimeString(),
+            username: msgUsername,
+        };
+
+        const { data: room, error } = await supabase
+            .from('rooms')
+            .select('*')
+            .eq('username', username)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        let { queue } = room;
         messages.push(message);
-        setMessages(messages);
+        queue = messages;
+
+        const { data: updatedRoom} = await supabase
+            .from('rooms')
+            .update({ queue })
+            .eq('username', username)
+            .single();
+
+
+        setMessages(queue);
         setMessageContent('');
         setTracks([]);
-    }
+    };
+
 
     const searchSongRequest = async() =>{
         await fetchTracks(messageContent);

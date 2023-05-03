@@ -12,10 +12,11 @@ export default function Home() {
      * the user there
      */
     const handleGetLink = async() => {
-        const response = await fetch(`/api/create-room?userID=${encodeURIComponent(username)}`);
+        setUsername(username);
+        const response = await fetch(`/api/get-room?username=${encodeURIComponent(username)}`);
         const data = await response.json();
-        const token = data.token;
-        router.push(`/room/token=${token}?username=${username}`);
+        const id = data.id;
+        router.push(`/room/id=${id}?username=${username}`);
     }
 
     return (
