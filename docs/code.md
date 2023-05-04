@@ -1,7 +1,7 @@
 # Under the Hood (The Code)
 
 ## getTracks.ts
-![getTracks.ts Code](./_static/img.png)
+![getTracks.ts Code](./images/img.png)
 
 *param query - Search term that is passed to search.ts in the API calls*
 
@@ -14,7 +14,7 @@ This is the brains of the operation, calling on the Spotify API to get back song
 They can specify a song, artist, or genre and get back to the top 5 results directly from Spotify.
 
 ## search.ts
-![search.ts Code](./_static/img_1.png)
+![search.ts Code](./images/img_1.png)
 
 *param req - Contains {search: string}, the term that is used to query the Spotify API*
 
@@ -23,7 +23,7 @@ They can specify a song, artist, or genre and get back to the top 5 results dire
 The API call that is used calls on the middleman, NoCodeAPI, who currently uses my Spotify developer credentials to make the search request.
 
 ## create-room.ts
-![create-room.ts Code](./_static/img_2.png)
+![create-room.ts Code](./images/img_2.png)
 
 *param req - Contains the provided username to use in token creation as the "userID"*
 

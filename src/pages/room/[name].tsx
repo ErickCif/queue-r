@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import {Message} from "../../util/Message";
 import {getTracks} from "../../util/getTracks";
+import {supabase} from "../../util/supabase";
 
 interface Track {
     name: string;
@@ -11,11 +12,29 @@ interface Track {
 }
 
 const MusicRoom: React.FC = () => {
+
+
     const router = useRouter();
     let messageCounter = 1;
     const {username} = router.query;
     const { asPath } = router;
     const [messages, setMessages] = useState<Message[]>([]);
+    const setInitialQueue = async() => {
+        const { data: room, error } = await supabase
+            .from('rooms')
+            .select('queue')
+            .eq('username', username)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        let { queue } = room;
+        setMessages(queue);
+    }
+    setInitialQueue();
+
     const [messageContent, setMessageContent] = useState('');
     const [currentTime, setCurrentTime] = useState(new Date());
     const [tracks, setTracks] = useState<Track[]>([]);
@@ -49,14 +68,42 @@ const MusicRoom: React.FC = () => {
     };
 
 
-    const sendSongRequest = async(messageContent: string) => {
+    const sendSongRequest = async (messageContent: string) => {
         updateCurrentTime();
-        const message: Message = {id: messageCounter++, content: messageContent, timestamp: currentTime.toLocaleTimeString(), username: msgUsername}
+
+        const message: Message = {
+            id: messageCounter++,
+            content: messageContent,
+            timestamp: currentTime.toLocaleTimeString(),
+            username: msgUsername,
+        };
+
+        const { data: room, error } = await supabase
+            .from('rooms')
+            .select('*')
+            .eq('username', username)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        let { queue } = room;
         messages.push(message);
-        setMessages(messages);
+        queue = messages;
+
+        await supabase
+            .from('rooms')
+            .update({ queue })
+            .eq('username', username)
+            .single();
+
+
+        setMessages(queue);
         setMessageContent('');
         setTracks([]);
-    }
+    };
+
 
     const searchSongRequest = async() =>{
         await fetchTracks(messageContent);
@@ -73,9 +120,20 @@ const MusicRoom: React.FC = () => {
         navigator.clipboard.writeText(chatLink);
     };
 
-    const clearQueue = async() => {
+    const clearQueue = async () => {
         setMessages([]);
-    }
+
+        const { error } = await supabase
+            .from("rooms")
+            .update({ queue: [] })
+            .eq("username", username)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+    };
+
 
     //<button onClick={handleCopyLink}>Share this link: {chatLink}</button>
 
