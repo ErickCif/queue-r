@@ -26,7 +26,7 @@ export default function Home() {
                 <div className="text-center">
                     <input
                         type="text"
-                        placeholder="Enter your username"
+                        placeholder="Enter Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         className="w-64 h-10 px-3 rounded-lg bg-white border-2 border-green-400 text-green-500 outline-none focus:border-green-500 text-center"
@@ -37,6 +37,13 @@ export default function Home() {
                         className={`btn rounded-full ${username ? 'bg-green-400 hover:bg-green-500 text-white' : 'bg-gray-300'}`}
                     >
                         Create room
+                    </button>
+                    <button
+                        onClick={handleGetLink}
+                        disabled={!username}
+                        className={`btn rounded-full ${username ? 'bg-green-400 hover:bg-green-500 text-white' : 'bg-gray-300'}`}
+                    >
+                        Join room
                     </button>
                 </div>
             </div>

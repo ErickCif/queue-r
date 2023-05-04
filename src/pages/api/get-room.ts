@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return;
         }
 
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from('rooms')
             .insert([{ username: username, link: id }]);
 

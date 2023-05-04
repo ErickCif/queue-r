@@ -12,11 +12,29 @@ interface Track {
 }
 
 const MusicRoom: React.FC = () => {
+
+
     const router = useRouter();
     let messageCounter = 1;
     const {username} = router.query;
     const { asPath } = router;
     const [messages, setMessages] = useState<Message[]>([]);
+    const setInitialQueue = async() => {
+        const { data: room, error } = await supabase
+            .from('rooms')
+            .select('*')
+            .eq('username', username)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        let { queue } = room;
+        setMessages(queue);
+    }
+    setInitialQueue();
+
     const [messageContent, setMessageContent] = useState('');
     const [currentTime, setCurrentTime] = useState(new Date());
     const [tracks, setTracks] = useState<Track[]>([]);
@@ -74,7 +92,7 @@ const MusicRoom: React.FC = () => {
         messages.push(message);
         queue = messages;
 
-        const { data: updatedRoom} = await supabase
+        await supabase
             .from('rooms')
             .update({ queue })
             .eq('username', username)
@@ -104,6 +122,27 @@ const MusicRoom: React.FC = () => {
 
     const clearQueue = async() => {
         setMessages([]);
+
+        const { data: room, error } = await supabase
+            .from('rooms')
+            .select('*')
+            .eq('username', username)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        let { queue } = room;
+
+        queue = messages;
+
+        await supabase
+            .from('rooms')
+            .update({ queue })
+            .eq('username', username)
+            .single();
+
     }
 
     //<button onClick={handleCopyLink}>Share this link: {chatLink}</button>
