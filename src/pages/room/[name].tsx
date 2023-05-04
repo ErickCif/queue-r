@@ -22,7 +22,7 @@ const MusicRoom: React.FC = () => {
     const setInitialQueue = async() => {
         const { data: room, error } = await supabase
             .from('rooms')
-            .select('*')
+            .select('queue')
             .eq('username', username)
             .single();
 
@@ -120,30 +120,20 @@ const MusicRoom: React.FC = () => {
         navigator.clipboard.writeText(chatLink);
     };
 
-    const clearQueue = async() => {
+    const clearQueue = async () => {
         setMessages([]);
 
-        const { data: room, error } = await supabase
-            .from('rooms')
-            .select('*')
-            .eq('username', username)
+        const { error } = await supabase
+            .from("rooms")
+            .update({ queue: [] })
+            .eq("username", username)
             .single();
 
         if (error) {
             throw error;
         }
+    };
 
-        let { queue } = room;
-
-        queue = messages;
-
-        await supabase
-            .from('rooms')
-            .update({ queue })
-            .eq('username', username)
-            .single();
-
-    }
 
     //<button onClick={handleCopyLink}>Share this link: {chatLink}</button>
 
