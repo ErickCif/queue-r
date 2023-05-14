@@ -1,5 +1,6 @@
 import { getTracks } from '../src/util/getTracks';
 import fetchMock from 'jest-fetch-mock';
+import {supabase} from "../src/util/supabase";
 
 beforeEach(() => {
     fetchMock.resetMocks();
@@ -48,3 +49,4 @@ describe('getTracks', () => {
         ]);
     });
 });
+

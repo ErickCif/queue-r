@@ -19,6 +19,8 @@ const MusicRoom: React.FC = () => {
     const {username} = router.query;
     const { asPath } = router;
     const [messages, setMessages] = useState<Message[]>([]);
+
+
     const setInitialQueue = async() => {
         const { data: room, error } = await supabase
             .from('rooms')
