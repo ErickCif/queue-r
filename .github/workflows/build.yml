@@ -22,10 +22,6 @@ jobs:
         os: [ubuntu-latest]
         node-version: [16.x]
 
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-
     steps:
       - uses: actions/checkout@v3
 
@@ -35,11 +31,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: package.json
-
-      - name: Set up environment variables
-        run: |
-          echo "SUPABASE_URL=${SUPABASE_URL}" >> $GITHUB_ENV
-          echo "SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: |
@@ -59,3 +50,7 @@ jobs:
 
       - name: Upload coverage
         uses: codecov/codecov-action@v3
+
+env:
+  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}

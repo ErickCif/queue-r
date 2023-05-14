@@ -10,6 +10,9 @@ The host cannot send out that link to anyone and have them join to start request
 [![codecov](https://codecov.io/gh/ErickCif/queue-r/branch/main/graph/badge.svg)](https://codecov.io/gh/ErickCif/queue-r)
 [![Documentation Status](https://readthedocs.org/projects/queue-r/badge/?version=latest)](https://queue-r.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+(Latest Release)
+[![GitHub release](https://img.shields.io/github/v/release/ErickCif/queue-r?include_prereleases&sort=semver)](https://github.com/ErickCif/queue-r/releases)
+[![GitHub release](https://img.shields.io/badge/first%20release-1.0.0-blue)](https://github.com/ErickCif/queue-r/releases/tag/0.0.1)
 </br>
 
 [![Deployment Status](https://img.shields.io/github/deployments/ErickCif/queue-r/production?label=deployment&logo=vercel)](https://queue-r.vercel.app)
