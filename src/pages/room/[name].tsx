@@ -4,6 +4,7 @@ import { useState } from 'react';
 import {Message} from "../../util/Message";
 import {getTracks} from "../../util/getTracks";
 import {supabase} from "../../util/supabase";
+import QRCode from "react-qr-code";
 
 interface Track {
     name: string;
@@ -13,10 +14,11 @@ interface Track {
 
 const MusicRoom: React.FC = () => {
 
-
+    const [link, setLink] = useState('');
     const router = useRouter();
     let messageCounter = 1;
     const {username} = router.query;
+    const {id} = router.query;
     const { asPath } = router;
     const [messages, setMessages] = useState<Message[]>([]);
 
@@ -116,6 +118,7 @@ const MusicRoom: React.FC = () => {
     useEffect(() => {
         const link = `${window.location.origin}${asPath}`;
         setChatLink(link);
+        setLink(link)
     }, [asPath]);
 
     const handleCopyLink = () => {
@@ -136,6 +139,10 @@ const MusicRoom: React.FC = () => {
         }
     };
 
+    const [qrCode, setQrCode] = useState(false);
+    const showQr = () => {
+        setQrCode(!qrCode);
+    }
 
     //<button onClick={handleCopyLink}>Share this link: {chatLink}</button>
 
@@ -195,7 +202,7 @@ const MusicRoom: React.FC = () => {
                         {isLoading ? (
                             <p>Loading...</p>
                         ) : (
-                            <div className="">
+                            <div className="overflow-scroll">
                                 {tracks.map((track, index) => (
                                     <div key={index} className="mb-8 flex flex-row items-center">
                                         <button
@@ -222,10 +229,21 @@ const MusicRoom: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="absolute bottom-0 text-green-500 text-center">
+
+            <div className="bottom-0 text-green-500 text-center">
+                    {qrCode ? (
+                        <div className="flex justify-center items-center">
+                            <QRCode value={link} size={148} className="bg-green-500 p-1"/>
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
                 <p className="font-semibold">Share this link with your friends!</p>
                 <button onClick={handleCopyLink} className="btn rounded-full">
                     Copy Link
+                </button>
+                <button onClick={showQr} className="btn rounded-full">
+                    Show QR Code
                 </button>
                 <button onClick={() => window.location.href = '/'} className="btn rounded-full">
                     Back Home
