@@ -18,7 +18,6 @@ const MusicRoom: React.FC = () => {
     const router = useRouter();
     let messageCounter = 1;
     const {username} = router.query;
-    const {id} = router.query;
     const { asPath } = router;
     const [messages, setMessages] = useState<Message[]>([]);
 
